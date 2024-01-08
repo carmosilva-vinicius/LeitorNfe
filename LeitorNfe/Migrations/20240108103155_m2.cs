@@ -10,11 +10,11 @@ namespace LeitorNfe.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<decimal>(
-                name: "QuantidadeComprada",
-                table: "Items",
-                type: "decimal(18,2)",
-                nullable: false,
+            migrationBuilder.AlterColumn<int>(
+                name: "PedidoCompraId",
+                table: "NotaFiscals",
+                type: "int",
+                nullable: true,
                 oldClrType: typeof(int),
                 oldType: "int");
         }
@@ -23,12 +23,14 @@ namespace LeitorNfe.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<int>(
-                name: "QuantidadeComprada",
-                table: "Items",
+                name: "PedidoCompraId",
+                table: "NotaFiscals",
                 type: "int",
                 nullable: false,
-                oldClrType: typeof(decimal),
-                oldType: "decimal(18,2)");
+                defaultValue: 0,
+                oldClrType: typeof(int),
+                oldType: "int",
+                oldNullable: true);
         }
     }
 }

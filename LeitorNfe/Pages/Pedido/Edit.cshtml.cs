@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using LeitorNfe.Data;
 using LeitorNfe.Models;
 
-namespace LeitorNfe.Pages.Nfe
+namespace LeitorNfe.Pages.Pedido
 {
     public class EditModel : PageModel
     {
@@ -21,7 +21,7 @@ namespace LeitorNfe.Pages.Nfe
         }
 
         [BindProperty]
-        public NotaFiscal NotaFiscal { get; set; } = default!;
+        public PedidoCompra PedidoCompra { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,14 +30,12 @@ namespace LeitorNfe.Pages.Nfe
                 return NotFound();
             }
 
-            var notafiscal =  await _context.NotaFiscals.FirstOrDefaultAsync(m => m.Id == id);
-            if (notafiscal == null)
+            var pedidocompra =  await _context.PedidoCompras.FirstOrDefaultAsync(m => m.Id == id);
+            if (pedidocompra == null)
             {
                 return NotFound();
             }
-            NotaFiscal = notafiscal;
-           ViewData["DestinatarioId"] = new SelectList(_context.Destinatarios, "Id", "Id");
-           ViewData["EmitenteId"] = new SelectList(_context.Emitentes, "Id", "Id");
+            PedidoCompra = pedidocompra;
             return Page();
         }
 
@@ -50,7 +48,7 @@ namespace LeitorNfe.Pages.Nfe
                 return Page();
             }
 
-            _context.Attach(NotaFiscal).State = EntityState.Modified;
+            _context.Attach(PedidoCompra).State = EntityState.Modified;
 
             try
             {
@@ -58,7 +56,7 @@ namespace LeitorNfe.Pages.Nfe
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!NotaFiscalExists(NotaFiscal.Id))
+                if (!PedidoCompraExists(PedidoCompra.Id))
                 {
                     return NotFound();
                 }
@@ -71,9 +69,9 @@ namespace LeitorNfe.Pages.Nfe
             return RedirectToPage("./Index");
         }
 
-        private bool NotaFiscalExists(int id)
+        private bool PedidoCompraExists(int id)
         {
-            return _context.NotaFiscals.Any(e => e.Id == id);
+            return _context.PedidoCompras.Any(e => e.Id == id);
         }
     }
 }

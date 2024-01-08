@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LeitorNfe.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240107192908_m2")]
+    [Migration("20240108103155_m2")]
     partial class m2
     {
         /// <inheritdoc />
@@ -33,11 +33,7 @@ namespace LeitorNfe.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CNPJ")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
+                    b.Property<string>("CPF")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -186,6 +182,9 @@ namespace LeitorNfe.Migrations
                     b.Property<int>("Numero")
                         .HasColumnType("int");
 
+                    b.Property<int?>("PedidoCompraId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(18,2)");
 
@@ -194,6 +193,8 @@ namespace LeitorNfe.Migrations
                     b.HasIndex("DestinatarioId");
 
                     b.HasIndex("EmitenteId");
+
+                    b.HasIndex("PedidoCompraId");
 
                     b.ToTable("NotaFiscals");
                 });
@@ -211,6 +212,27 @@ namespace LeitorNfe.Migrations
                     b.HasIndex("ItemId");
 
                     b.ToTable("NotaItems");
+                });
+
+            modelBuilder.Entity("LeitorNfe.Models.PedidoCompra", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Descricao")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Numero")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PedidoCompras");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -458,9 +480,16 @@ namespace LeitorNfe.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("LeitorNfe.Models.PedidoCompra", "PedidoCompra")
+                        .WithMany("NotasFiscais")
+                        .HasForeignKey("PedidoCompraId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.Navigation("Destinatario");
 
                     b.Navigation("Emitente");
+
+                    b.Navigation("PedidoCompra");
                 });
 
             modelBuilder.Entity("LeitorNfe.Models.NotaItem", b =>
@@ -553,6 +582,11 @@ namespace LeitorNfe.Migrations
                     b.Navigation("Itens");
 
                     b.Navigation("NotaItems");
+                });
+
+            modelBuilder.Entity("LeitorNfe.Models.PedidoCompra", b =>
+                {
+                    b.Navigation("NotasFiscais");
                 });
 #pragma warning restore 612, 618
         }

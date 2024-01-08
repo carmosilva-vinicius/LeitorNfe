@@ -27,6 +27,9 @@ public class NotaFiscal
     public decimal Total { get; set; }
     public int EmitenteId { get; set; }
     public int DestinatarioId { get; set; }
+    public int? PedidoCompraId { get; set; }
+    [DisplayName("Pedido de Compra")]
+    public virtual PedidoCompra? PedidoCompra { get; set; }
     public virtual Emitente? Emitente { get; set; }
     [DisplayName("Destinatário")]
     public virtual Destinatario? Destinatario { get; set; }

@@ -30,6 +30,7 @@
     <Folder Include="Pages\Endereco\" />
     <Folder Include="Pages\Item\" />
     <Folder Include="Pages\Nfe\" />
+    <Folder Include="Pages\Pedido\" />
   </ItemGroup>
 
 </Project>

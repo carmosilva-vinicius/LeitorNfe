@@ -46,7 +46,7 @@ namespace LeitorNfe.Migrations
                     b.HasIndex("EnderecoId")
                         .IsUnique();
 
-                    b.ToTable("Destinatarios", (string)null);
+                    b.ToTable("Destinatarios");
                 });
 
             modelBuilder.Entity("LeitorNfe.Models.Emitente", b =>
@@ -77,7 +77,7 @@ namespace LeitorNfe.Migrations
                     b.HasIndex("EnderecoId")
                         .IsUnique();
 
-                    b.ToTable("Emitentes", (string)null);
+                    b.ToTable("Emitentes");
                 });
 
             modelBuilder.Entity("LeitorNfe.Models.Endereco", b =>
@@ -114,7 +114,7 @@ namespace LeitorNfe.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Enderecos", (string)null);
+                    b.ToTable("Enderecos");
                 });
 
             modelBuilder.Entity("LeitorNfe.Models.Item", b =>
@@ -152,7 +152,7 @@ namespace LeitorNfe.Migrations
 
                     b.HasIndex("NotaFiscalId");
 
-                    b.ToTable("Items", (string)null);
+                    b.ToTable("Items");
                 });
 
             modelBuilder.Entity("LeitorNfe.Models.NotaFiscal", b =>
@@ -179,6 +179,9 @@ namespace LeitorNfe.Migrations
                     b.Property<int>("Numero")
                         .HasColumnType("int");
 
+                    b.Property<int?>("PedidoCompraId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(18,2)");
 
@@ -188,7 +191,9 @@ namespace LeitorNfe.Migrations
 
                     b.HasIndex("EmitenteId");
 
-                    b.ToTable("NotaFiscals", (string)null);
+                    b.HasIndex("PedidoCompraId");
+
+                    b.ToTable("NotaFiscals");
                 });
 
             modelBuilder.Entity("LeitorNfe.Models.NotaItem", b =>
@@ -203,7 +208,28 @@ namespace LeitorNfe.Migrations
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("NotaItems", (string)null);
+                    b.ToTable("NotaItems");
+                });
+
+            modelBuilder.Entity("LeitorNfe.Models.PedidoCompra", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Descricao")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Numero")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PedidoCompras");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -451,9 +477,16 @@ namespace LeitorNfe.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("LeitorNfe.Models.PedidoCompra", "PedidoCompra")
+                        .WithMany("NotasFiscais")
+                        .HasForeignKey("PedidoCompraId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.Navigation("Destinatario");
 
                     b.Navigation("Emitente");
+
+                    b.Navigation("PedidoCompra");
                 });
 
             modelBuilder.Entity("LeitorNfe.Models.NotaItem", b =>
@@ -546,6 +579,11 @@ namespace LeitorNfe.Migrations
                     b.Navigation("Itens");
 
                     b.Navigation("NotaItems");
+                });
+
+            modelBuilder.Entity("LeitorNfe.Models.PedidoCompra", b =>
+                {
+                    b.Navigation("NotasFiscais");
                 });
 #pragma warning restore 612, 618
         }

@@ -102,7 +102,7 @@ namespace LeitorNfe.Pages.Nfe
             }
 
             
-            return RedirectToPage("./Index");
+            return RedirectToPage("../Pedido/Create");
             
         }
     }

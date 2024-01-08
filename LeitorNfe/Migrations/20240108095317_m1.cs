@@ -69,6 +69,20 @@ namespace LeitorNfe.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PedidoCompras",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Numero = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Descricao = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PedidoCompras", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -181,8 +195,7 @@ namespace LeitorNfe.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CNPJ = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CPF = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EnderecoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -229,7 +242,8 @@ namespace LeitorNfe.Migrations
                     DataEmissao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     EmitenteId = table.Column<int>(type: "int", nullable: false),
-                    DestinatarioId = table.Column<int>(type: "int", nullable: false)
+                    DestinatarioId = table.Column<int>(type: "int", nullable: false),
+                    PedidoCompraId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -246,6 +260,12 @@ namespace LeitorNfe.Migrations
                         principalTable: "Emitentes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_NotaFiscals_PedidoCompras_PedidoCompraId",
+                        column: x => x.PedidoCompraId,
+                        principalTable: "PedidoCompras",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -257,7 +277,7 @@ namespace LeitorNfe.Migrations
                     Numero = table.Column<int>(type: "int", nullable: false),
                     CodigoProduto = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    QuantidadeComprada = table.Column<int>(type: "int", nullable: false),
+                    QuantidadeComprada = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ValorUnitario = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ValorTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     NotaFiscalId = table.Column<int>(type: "int", nullable: true)
@@ -363,6 +383,11 @@ namespace LeitorNfe.Migrations
                 column: "EmitenteId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_NotaFiscals_PedidoCompraId",
+                table: "NotaFiscals",
+                column: "PedidoCompraId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_NotaItems_ItemId",
                 table: "NotaItems",
                 column: "ItemId");
@@ -406,6 +431,9 @@ namespace LeitorNfe.Migrations
 
             migrationBuilder.DropTable(
                 name: "Emitentes");
+
+            migrationBuilder.DropTable(
+                name: "PedidoCompras");
 
             migrationBuilder.DropTable(
                 name: "Enderecos");

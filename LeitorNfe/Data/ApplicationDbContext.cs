@@ -17,10 +17,17 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<Endereco> Enderecos { get; set; } = default!;
     public DbSet<Item> Items { get; set; } = default!;
     public DbSet<NotaItem> NotaItems { get; set; } = default!;
+    public DbSet<PedidoCompra> PedidoCompras { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+        
+        builder.Entity<NotaFiscal>()
+            .HasOne(nf => nf.PedidoCompra)
+            .WithMany(pc => pc.NotasFiscais)
+            .HasForeignKey(nf => nf.PedidoCompraId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.Entity<NotaFiscal>()
             .HasOne(nf => nf.Emitente)
