@@ -1,0 +1,69 @@
+@page
+@model LeitorNfe.Pages.Item.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Item[0].Numero)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Item[0].CodigoProduto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Item[0].Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Item[0].QuantidadeComprada)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Item[0].ValorUnitario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Item[0].ValorTotal)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Item) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Numero)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodigoProduto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuantidadeComprada)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValorUnitario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValorTotal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NotaItems)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

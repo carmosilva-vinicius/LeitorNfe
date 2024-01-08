@@ -1,0 +1,59 @@
+@page
+@model LeitorNfe.Pages.Nfe.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Carregar</h1>
+
+<h4>Nota Fiscal</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @* <div class="form-group"> *@
+            @*     <label asp-for="NotaFiscal.Numero" class="control-label"></label> *@
+            @*     <input asp-for="NotaFiscal.Numero" class="form-control" /> *@
+            @*     <span asp-validation-for="NotaFiscal.Numero" class="text-danger"></span> *@
+            @* </div> *@
+            @* <div class="form-group"> *@
+            @*     <label asp-for="NotaFiscal.ChaveAcesso" class="control-label"></label> *@
+            @*     <input asp-for="NotaFiscal.ChaveAcesso" class="form-control" /> *@
+            @*     <span asp-validation-for="NotaFiscal.ChaveAcesso" class="text-danger"></span> *@
+            @* </div> *@
+            @* <div class="form-group"> *@
+            @*     <label asp-for="NotaFiscal.DataEmissao" class="control-label"></label> *@
+            @*     <input asp-for="NotaFiscal.DataEmissao" class="form-control" /> *@
+            @*     <span asp-validation-for="NotaFiscal.DataEmissao" class="text-danger"></span> *@
+            @* </div> *@
+            @* <div class="form-group"> *@
+            @*     <label asp-for="NotaFiscal.Total" class="control-label"></label> *@
+            @*     <input asp-for="NotaFiscal.Total" class="form-control" /> *@
+            @*     <span asp-validation-for="NotaFiscal.Total" class="text-danger"></span> *@
+            @* </div> *@
+            @* <div class="form-group"> *@
+            @*     <label asp-for="NotaFiscal.EmitenteId" class="control-label"></label> *@
+            @*     <select asp-for="NotaFiscal.EmitenteId" class ="form-control" asp-items="ViewBag.EmitenteId"></select> *@
+            @* </div> *@
+            @* <div class="form-group"> *@
+            @*     <label asp-for="NotaFiscal.DestinatarioId" class="control-label"></label> *@
+            @*     <select asp-for="NotaFiscal.DestinatarioId" class ="form-control" asp-items="ViewBag.DestinatarioId"></select> *@
+            @* </div> *@
+            <div class="form-group">
+                <label asp-for="FileUpload" class="control-label">Selecione um arquivo</label>
+                <input asp-for="FileUpload" type="file" class="form-control"/>
+                <span asp-validation-for="FileUpload" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="margin-top: 20px;">
+                <input type="submit" value="Carregar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Voltar</a>
+</div>
+

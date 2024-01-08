@@ -1,0 +1,176 @@
+@page
+@model LeitorNfe.Pages.Nfe.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalhes</h1>
+
+<div>
+    <h4>Nota Fiscal</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NotaFiscal.Numero)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NotaFiscal.Numero)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NotaFiscal.ChaveAcesso)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NotaFiscal.ChaveAcesso)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NotaFiscal.DataEmissao)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NotaFiscal.DataEmissao)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NotaFiscal.Total)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NotaFiscal.Total)
+        </dd>
+        <hr />
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NotaFiscal.Emitente)
+        </dt><dd class="col-sm-10"></dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NotaFiscal.Emitente.Nome)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NotaFiscal.Emitente.Nome)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NotaFiscal.Emitente.CNPJ)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NotaFiscal.Emitente.CNPJ)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NotaFiscal.Emitente.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NotaFiscal.Emitente.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NotaFiscal.Emitente.Endereco.Logradouro)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NotaFiscal.Emitente.Endereco.Logradouro)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NotaFiscal.Emitente.Endereco.Numero)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NotaFiscal.Emitente.Endereco.Numero)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NotaFiscal.Emitente.Endereco.Bairro)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NotaFiscal.Emitente.Endereco.Bairro)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NotaFiscal.Emitente.Endereco.Municipio)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NotaFiscal.Emitente.Endereco.Municipio)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NotaFiscal.Emitente.Endereco.UF)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NotaFiscal.Emitente.Endereco.UF)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NotaFiscal.Emitente.Endereco.CEP)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NotaFiscal.Emitente.Endereco.CEP)
+        </dd>
+        <hr />
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NotaFiscal.Destinatario)
+        </dt><dd class="col-sm-10"></dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NotaFiscal.Destinatario.Nome)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NotaFiscal.Destinatario.Nome)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NotaFiscal.Destinatario.CPF)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NotaFiscal.Destinatario.CPF)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NotaFiscal.Destinatario.Endereco.Logradouro)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NotaFiscal.Destinatario.Endereco.Logradouro)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NotaFiscal.Destinatario.Endereco.Numero)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NotaFiscal.Destinatario.Endereco.Numero)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NotaFiscal.Destinatario.Endereco.Bairro)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NotaFiscal.Destinatario.Endereco.Bairro)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NotaFiscal.Destinatario.Endereco.Municipio)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NotaFiscal.Destinatario.Endereco.Municipio)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NotaFiscal.Destinatario.Endereco.UF)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NotaFiscal.Destinatario.Endereco.UF)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NotaFiscal.Destinatario.Endereco.CEP)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NotaFiscal.Destinatario.Endereco.CEP)
+        </dd>
+        <hr />
+        
+        <h4>@Html.DisplayNameFor(model => model.NotaFiscal.Itens)</h4>
+        @foreach (var item in Model.NotaFiscal.Itens)
+        {
+            <dt class="col-sm-2">@Html.DisplayNameFor(_ => item.Numero)</dt>
+            <dd class="col-sm-10">@Html.DisplayFor(_ => item.Numero)</dd>
+
+            <dt class="col-sm-2">@Html.DisplayNameFor(_ => item.CodigoProduto)</dt>
+            <dd class="col-sm-10">@Html.DisplayFor(_ => item.CodigoProduto)</dd>
+
+            <dt class="col-sm-2">@Html.DisplayNameFor(_ => item.Nome)</dt>
+            <dd class="col-sm-10">@Html.DisplayFor(_ => item.Nome)</dd>
+
+            <dt class="col-sm-2">@Html.DisplayNameFor(_ => item.QuantidadeComprada)</dt>
+            <dd class="col-sm-10">@Html.DisplayFor(_ => item.QuantidadeComprada)</dd>
+
+            <dt class="col-sm-2">@Html.DisplayNameFor(_ => item.ValorUnitario)</dt>
+            <dd class="col-sm-10">@Html.DisplayFor(_ => item.ValorUnitario)</dd>
+
+            <dt class="col-sm-2">@Html.DisplayNameFor(_ => item.ValorTotal)</dt>
+            <dd class="col-sm-10">@Html.DisplayFor(_ => item.ValorTotal)</dd>
+            <hr />
+        }
+    </dl>
+</div>
+<div>
+    <a asp-page="./Index">Voltar para lista</a>
+</div>

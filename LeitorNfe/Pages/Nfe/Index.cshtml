@@ -1,0 +1,68 @@
+@page
+@model LeitorNfe.Pages.Nfe.IndexModel
+
+@{
+    ViewData["Title"] = "Notas";
+}
+
+<h1>Notas fiscais</h1>
+
+<p>
+    <a asp-page="Create">Criar Nova</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NotaFiscal[0].Numero)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NotaFiscal[0].ChaveAcesso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NotaFiscal[0].DataEmissao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NotaFiscal[0].Total)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NotaFiscal[0].Emitente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NotaFiscal[0].Destinatario)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.NotaFiscal) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Numero)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChaveAcesso)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataEmissao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+            <td>
+                <a asp-page="../Emitente/Details" asp-route-id="@item.Emitente.Id">@item.Emitente.CNPJ</a>
+            </td>
+            <td>
+                <a asp-page="../Destinatario/Details" asp-route-id="@item.Destinatario.Id">@item.Destinatario.CPF</a>
+            </td>
+            <td>
+                <a asp-page="../Item/Index" asp-route-id="@item.Id">Itens</a>
+            </td>
+            <td>
+                |
+                <a asp-page="./Details" asp-route-id="@item.Id">Detalhes</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Deletar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

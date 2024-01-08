@@ -1,0 +1,35 @@
+@page
+@model LeitorNfe.Pages.Destinatario.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalhes</h1>
+
+<div>
+    <h4>Destinatário</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Destinatario.Nome)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Destinatario.Nome)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Destinatario.CPF)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Destinatario.CPF)
+        </dd>
+        <dt class="col-sm-2">
+            <a asp-page="../Endereco/Details" asp-route-id="@Model.Destinatario.EnderecoId">
+                @Html.DisplayNameFor(model => model.Destinatario.Endereco)
+            </a>
+        </dt>
+    </dl>
+</div>
+<div>
+    <a asp-page="../Nfe/Index">Voltar para lista</a>
+</div>
