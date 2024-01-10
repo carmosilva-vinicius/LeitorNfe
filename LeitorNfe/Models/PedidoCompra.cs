@@ -1,11 +1,18 @@
 
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LeitorNfe.Models;
 
+// [Bind("Id,Numero,Descricao")]
 public class PedidoCompra
 {
+    public PedidoCompra()
+    {
+        NotasFiscais = new List<NotaFiscal>();
+    }
+
     [Key]
     public int Id { get; set; }
     [DisplayName("Número")]

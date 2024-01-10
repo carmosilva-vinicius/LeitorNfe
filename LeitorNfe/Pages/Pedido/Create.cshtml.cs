@@ -13,14 +13,21 @@ namespace LeitorNfe.Pages.Pedido
     public class CreateModel : PageModel
     {
         private readonly LeitorNfe.Data.ApplicationDbContext _context;
+        private int _notaFiscalId;
 
         public CreateModel(LeitorNfe.Data.ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public IActionResult OnGet()
+        public IActionResult OnGet(int? id)
         {
+            if(id is null or <= 0)
+            {
+                return RedirectToPage("../Nfe/Index");
+            }
+            _notaFiscalId = (int)id;
+            TempData["_notaFiscalId"] = _notaFiscalId;
             return Page();
         }
 
@@ -36,6 +43,12 @@ namespace LeitorNfe.Pages.Pedido
             }
 
             _context.PedidoCompras.Add(PedidoCompra);
+            await _context.SaveChangesAsync();
+            
+            _notaFiscalId = (int)TempData["_notaFiscalId"];
+            var notaFiscal = _context.NotaFiscals.Find(_notaFiscalId);
+            notaFiscal.PedidoCompraId = PedidoCompra.Id;
+            _context.NotaFiscals.Update(notaFiscal);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

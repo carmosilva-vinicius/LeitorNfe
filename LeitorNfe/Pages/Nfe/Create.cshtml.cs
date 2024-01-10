@@ -15,6 +15,7 @@ namespace LeitorNfe.Pages.Nfe
     public class CreateModel : PageModel
     {
         private readonly LeitorNfe.Data.ApplicationDbContext _context;
+        private NotaFiscal _notaFiscalCriada;
 
         public CreateModel(LeitorNfe.Data.ApplicationDbContext context)
         {
@@ -84,6 +85,7 @@ namespace LeitorNfe.Pages.Nfe
                 notaFiscal.DestinatarioId = destinatario.Id;
                 _context.NotaFiscals.Add(notaFiscal);
                 await _context.SaveChangesAsync();
+                _notaFiscalCriada = notaFiscal;
                 
                 var itens = xml.Descendants(ns + "det");
                 foreach (var item in itens)
@@ -102,7 +104,7 @@ namespace LeitorNfe.Pages.Nfe
             }
 
             
-            return RedirectToPage("../Pedido/Create");
+            return RedirectToPage("../Pedido/Create", new { id = _notaFiscalCriada.Id });
             
         }
     }
