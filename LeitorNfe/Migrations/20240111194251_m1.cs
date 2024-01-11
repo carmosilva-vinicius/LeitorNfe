@@ -196,6 +196,7 @@ namespace LeitorNfe.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CPF = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EnderecoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -217,7 +218,6 @@ namespace LeitorNfe.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CNPJ = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EnderecoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -243,7 +243,7 @@ namespace LeitorNfe.Migrations
                     Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     EmitenteId = table.Column<int>(type: "int", nullable: false),
                     DestinatarioId = table.Column<int>(type: "int", nullable: false),
-                    PedidoCompraId = table.Column<int>(type: "int", nullable: false)
+                    PedidoCompraId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {

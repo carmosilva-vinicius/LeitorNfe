@@ -10,7 +10,6 @@ public class Emitente
     public int Id { get; set; }
     public string Nome { get; set; }
     public string CNPJ { get; set; }
-    public string Email { get; set; }
     public int EnderecoId { get; set; }
     [DisplayName("Endereço")]
     public virtual Endereco? Endereco { get; set; }
@@ -21,6 +20,5 @@ public class Emitente
         XNamespace ns = "http://www.portalfiscal.inf.br/nfe";
         Nome = xml.Descendants(ns + "xNome").FirstOrDefault()?.Value;
         CNPJ = xml.Descendants(ns + "CNPJ").FirstOrDefault()?.Value;
-        Email = xml.Descendants(ns + "email").FirstOrDefault()?.Value;
     }
 }

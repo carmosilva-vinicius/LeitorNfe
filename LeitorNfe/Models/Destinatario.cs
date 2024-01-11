@@ -10,6 +10,7 @@ public class Destinatario
     public int Id { get; set; }
     public string Nome { get; set; }
     public string CPF { get; set; }
+    public string Email { get; set; }
     public int EnderecoId { get; set; }
     [DisplayName("Endereço")]
     public virtual Endereco? Endereco { get; set; }
@@ -20,5 +21,6 @@ public class Destinatario
         XNamespace ns = "http://www.portalfiscal.inf.br/nfe";
         Nome = xml.Descendants(ns + "xNome").FirstOrDefault()!.Value;
         CPF = xml.Descendants(ns + "CPF").FirstOrDefault()!.Value;
+        Email = xml.Descendants(ns + "email").FirstOrDefault()?.Value;
     }
 }
