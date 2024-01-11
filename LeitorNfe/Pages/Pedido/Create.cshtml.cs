@@ -51,7 +51,7 @@ namespace LeitorNfe.Pages.Pedido
             _context.NotaFiscals.Update(notaFiscal);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("../Nfe/Index");
         }
     }
 }

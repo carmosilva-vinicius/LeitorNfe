@@ -1,86 +1,106 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using LeitorNfe.Data;
 using LeitorNfe.Models;
 
 namespace LeitorNfe.Pages.Nfe
 {
-    public class CreateModel : PageModel
+    public class EditModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
-        private readonly IWebHostEnvironment _environment;
-        private NotaFiscal _notaFiscalCriada;
+        private readonly LeitorNfe.Data.ApplicationDbContext _context;
+        private NotaFiscal _notaAtual;
 
-        public CreateModel(ApplicationDbContext context, IWebHostEnvironment environment)
+        public EditModel(LeitorNfe.Data.ApplicationDbContext context)
         {
             _context = context;
-            _environment = environment;
         }
 
-        public IActionResult OnGet()
-        {
-        ViewData["DestinatarioId"] = new SelectList(_context.Destinatarios, "Id", "Id");
-        ViewData["EmitenteId"] = new SelectList(_context.Emitentes, "Id", "Id");
-            return Page();
-        }
-        
         [BindProperty]
         public IFormFile FileUpload { get; set; }
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+        public async Task<IActionResult> OnGetAsync(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            _notaAtual = _context.NotaFiscals.Find(id);
+            TempData["_notaAtual"] = _notaAtual;
+            return Page();
+        }
+
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-            
+
+            _notaAtual = (NotaFiscal)TempData["_notaAtual"];
+            var destinatarioAtual = _notaAtual.Destinatario;
+            var emitenteAtual = _notaAtual.Emitente;
+            var pedidoAtual = _notaAtual.PedidoCompra;
+            var itemsAtual = _notaAtual.Itens;
+            var endereceDestinatarioAtual = destinatarioAtual.Endereco;
+            var endereceEmitenteAtual = emitenteAtual.Endereco;
+
+
             if (FileUpload != null && FileUpload.Length > 0)
             {
                 var reader = new StreamReader(FileUpload.OpenReadStream());
                 var content = await reader.ReadToEndAsync();
-                
+
                 XNamespace ns = "http://www.portalfiscal.inf.br/nfe";
                 XDocument xml = XDocument.Parse(content);
-                
+
                 var emit = xml.Descendants(ns + "emit").FirstOrDefault();
                 var emitEnd = emit?.Descendants(ns + "enderEmit").FirstOrDefault();
                 var dest = xml.Descendants(ns + "dest").FirstOrDefault();
                 var destEnd = dest?.Descendants(ns + "enderDest").FirstOrDefault();
-                
-                
+
                 Models.Endereco emitenteEndereco = new Models.Endereco();
                 emitenteEndereco.loadXml(emitEnd);
-                _context.Enderecos.Add(emitenteEndereco);
+                emitenteEndereco.Id = endereceEmitenteAtual.Id;
+                _context.Enderecos.Update(emitenteEndereco);
                 await _context.SaveChangesAsync();
-                
+
                 Models.Emitente emitente = new Models.Emitente();
                 emitente.loadXml(emit);
+                emitente.Id = emitenteAtual.Id;
                 emitente.EnderecoId = emitenteEndereco.Id;
-                _context.Emitentes.Add(emitente);
-                await _context.SaveChangesAsync();
-                
+                _context.Emitentes.Update(emitente);
+
                 Models.Endereco destinatarioEndereco = new Models.Endereco();
                 destinatarioEndereco.loadXml(destEnd);
-                _context.Enderecos.Add(destinatarioEndereco);
+                destinatarioEndereco.Id = endereceDestinatarioAtual.Id;
+                _context.Enderecos.Update(destinatarioEndereco);
                 await _context.SaveChangesAsync();
-                
+
                 Models.Destinatario destinatario = new Models.Destinatario();
                 destinatario.loadXml(dest);
+                destinatario.Id = destinatarioAtual.Id;
                 destinatario.EnderecoId = destinatarioEndereco.Id;
-                _context.Destinatarios.Add(destinatario);
+                _context.Destinatarios.Update(destinatario);
                 await _context.SaveChangesAsync();
-                
+
                 NotaFiscal notaFiscal = new NotaFiscal();
                 notaFiscal.loadXml(xml);
+                notaFiscal.Id = _notaAtual.Id;
                 notaFiscal.EmitenteId = emitente.Id;
                 notaFiscal.DestinatarioId = destinatario.Id;
-                _context.NotaFiscals.Add(notaFiscal);
+                _context.NotaFiscals.Update(notaFiscal);
                 await _context.SaveChangesAsync();
-                _notaFiscalCriada = notaFiscal;
-                
+
                 var itens = xml.Descendants(ns + "det");
                 foreach (var item in itens)
                 {
@@ -88,7 +108,7 @@ namespace LeitorNfe.Pages.Nfe
                     i.loadXml(item);
                     _context.Items.Add(i);
                     await _context.SaveChangesAsync();
-                    
+
                     NotaItem ni = new NotaItem();
                     ni.ItemId = i.Id;
                     ni.NotaFiscalId = notaFiscal.Id;
@@ -96,24 +116,12 @@ namespace LeitorNfe.Pages.Nfe
                     await _context.SaveChangesAsync();
                 }
 
-                // Save the XML file to the local server
-                var xmlContent = xml.ToString();
-
-                var path = Path.Combine(_environment.WebRootPath, "files", $"{notaFiscal.Numero}.xml");
-                var directory = Path.GetDirectoryName(path);
-                if (!Directory.Exists(directory))
-                {
-                    if (directory != null) Directory.CreateDirectory(directory);
-                }
-                await System.IO.File.WriteAllTextAsync(path, xmlContent);
+                _context.Attach(notaFiscal).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
                 
-                //log the full path to the file
-                Console.WriteLine(path);
             }
-
-            
-            return RedirectToPage("../Pedido/Create", new { id = _notaFiscalCriada.Id });
-            
+            return RedirectToPage("./Index");
         }
+
     }
 }

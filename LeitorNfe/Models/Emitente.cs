@@ -16,7 +16,7 @@ public class Emitente
     public virtual Endereco? Endereco { get; set; }
     public virtual ICollection<NotaFiscal> NotasFiscais { get; set; }
 
-    public void loadXml(XDocument xml)
+    public void loadXml(XElement? xml)
     {
         XNamespace ns = "http://www.portalfiscal.inf.br/nfe";
         Nome = xml.Descendants(ns + "xNome").FirstOrDefault()?.Value;

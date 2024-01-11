@@ -43,12 +43,12 @@ namespace LeitorNfe.Pages.Nfe
                     .Enderecos.FirstOrDefaultAsync(m => m.Id == notafiscal.Destinatario.EnderecoId);
                 notafiscal.Emitente!.Endereco = await _context
                     .Enderecos.FirstOrDefaultAsync(m => m.Id == notafiscal.Emitente.EnderecoId);
-                
-                //load itens
                 notafiscal.Itens = await _context.NotaItems
                     .Where(ni => ni.NotaFiscalId == notafiscal.Id)
                     .Select(ni => ni.Item)
                     .ToListAsync();
+                notafiscal.PedidoCompra = await _context
+                    .PedidoCompras.FirstOrDefaultAsync(m => m.Id == notafiscal.PedidoCompraId);
                 NotaFiscal = notafiscal;
             }
             return Page();

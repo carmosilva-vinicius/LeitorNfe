@@ -21,11 +21,34 @@ namespace LeitorNfe.Pages.Nfe
 
         public IList<NotaFiscal> NotaFiscal { get;set; } = default!;
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(string SearchNumero, DateTime? SearchData, string SearchEmitente, string SearchDestinatario)
         {
             NotaFiscal = await _context.NotaFiscals
                 .Include(n => n.Destinatario)
                 .Include(n => n.Emitente).ToListAsync();
+
+            if (!String.IsNullOrEmpty(SearchNumero))
+            {
+                NotaFiscal = NotaFiscal.Where(s => s.Numero == Int32.Parse(SearchNumero)).ToList();
+            }
+
+            if (SearchData.HasValue)
+            {
+                NotaFiscal = NotaFiscal.Where(s => s.DataEmissao == SearchData).ToList();
+            }
+
+            if (!String.IsNullOrEmpty(SearchEmitente))
+            {
+                NotaFiscal = NotaFiscal.Where(s => s.Emitente!.Nome.Contains(SearchEmitente)).ToList();
+            }
+
+            if (!String.IsNullOrEmpty(SearchDestinatario))
+            {
+                NotaFiscal = NotaFiscal.Where(s => s.Destinatario!.Nome.Contains(SearchDestinatario)).ToList();
+            }
+
+            
         }
+
     }
 }
